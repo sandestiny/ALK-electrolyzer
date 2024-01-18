@@ -1,0 +1,6 @@
+__pycache__*
+hidden_includes/*
+log/*.txt
+log/*.png
+log/*.zip
+hidden_data/*
