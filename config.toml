@@ -1,0 +1,130 @@
+# Options
+[options]
+comp = 2 # Number of components (0 = O2, 1 = H2)
+data_export = 0 # Export of simulation results in the results folder (0 = False, 1 = True)
+data_plot = 1 # Short result summary in the command line after the end of the simulation (0 = False, 1 = True)
+log_export = 1 # Export of the log in the log folder (0 False, 1 = True)
+fig_export = 1 # Export of the simulation results figure in the log folder (0 False, 1 = True)
+model_export = 0 # Export archive of the complete model files (0 False, 1 = True)
+apm_export = 0 # Export apm files (0 False, 1 = True)
+gekko_patched = 0 # Use a patched version of the GEKKO module, if a process contains several systems (0 = False, 1 = True), see https://github.com/BYU-PRISM/GEKKO/issues/142
+no_eval_process_parameters = ['remote_server','remote_name', 'process_export_name'] # List of process parameters that are not evaluated during execution
+no_eval_system_parameters = ['gc_validation_name','datalog_validation_name', 'system_export_name'] # List of system parameters that are not evaluated during execution
+
+# Default Process Parameters
+[default.process]
+time_pre_end_hour = "48" # Pre-calculation time in hours (>= 0)
+time_pre_steps_per_hour = "1" # Pre-calculation step size (>= 1)
+time_end_hour = "24" # Simulation time in hours
+time_steps_per_hour = "6" # Simulation step size
+solve_mode = "1" # Solve mode (0 = steady-state, 1 = dynamic)
+pe_H2_in_O2 = "0" # H2 in O2 parameter estimation (0 = Off, 1 = On)
+pe_O2_in_H2 = "0" # O2 in H2 parameter estimation (0 = Off, 1 = On)
+pe_potential = "0" # Cell potential parameter estimation (0 = Off, 1 = On)
+pe_w_KOH = "0" # Electrolyte concentration parameter estimation (0 = Off, 1 = On)
+pe_energy = "0" # Temperature parameter estimation (0 = Off, 1 = On)
+dl_T_amb = "0" # Load values for the ambient temperature from a specific datalog file (0 = Off, 1 = On)
+opt_j_switching = "0" # Switch between the electrolyte flow modes when reaching a defined limit (see system configuration)
+plot_vd = "1" # Plot GC data (0 = False, 1 = True)
+plot_datalog = "0" # Plot datalog data (0 = False, 1 = True)
+remote = "0" # Remote calculation (0 = False, 1 = True)
+remote_server = "" # Define the address of the remote APMonitor server
+remote_name = "" # Define the prefix of the APMonitor files on the remote APMonitor server
+process_export_name = "" # Export name of the steady-state process simulation results
+
+# Default System Parameters
+[default.system]
+j = "5000" # Current density, A/m^2
+p = "5e5" # System pressure, Pa
+w_KOH_ini = "0.32" # Initial electrolyte concentration, -
+T_ini = "273.15 + 60" # Initial system temperature, K
+VS_L = "(0.350)/(1000*60)" # Electrolyte volume flow rate, m^3/s
+#VS_L = "[(0.350)/(1000*60) for z in process_config[pp].m_time]" # Time-varying electrolyte volume flow rate, m^3/s
+VS_L_A = "process_config[pp].system_config[ss].VS_L" # Anodic electrolyte volume flow rate, m^3/s
+VS_L_C = "process_config[pp].system_config[ss].VS_L" # Cathodic electrolyte volume flow rate, m^3/s
+exp_H2_in_O2 = "None" # Experimental result for the steady-state H2 in O2 gas contamination, vol.%
+exp_H2_in_O2_valid = "1" # Validity of the experimental results (0 = False, 1 = True)
+exp_potential = "None" # Experimental result for the steady-state cell potential, V
+exp_potential_valid = "1" # Validity of the experimental results (0 = False, 1 = True)
+exp_w_KOH_A = "None" # Experimental result for the anodic electrolyte concentration, -
+exp_w_KOH_C = "None" # Experimental result for the cathodic electrolyte concentration, -
+exp_w_KOH_time = "1" # Respective time of the experimental result, s
+exp_w_KOH_valid = "1" # Validity of the experimental results (0 = False, 1 = True)
+#
+# Stack
+num_cells = "1" # Number of cells in the stack, -
+#
+# HalfCell
+HC_VR = "0.302e-3" # Half-cell volume, m^3
+A_elec = "0.1*0.1" # Projection area of the electrode, m^2
+A_sep = "0.022698" # Separator area, m^2
+d_sep = "500e-6" # Separator thickness, m
+eps_sep = "0.55" # Separator porosity, -
+tau_sep = "1.9" # Separator tortuosity, -
+#
+# GasSeparator
+GS_VR = "9.8e-3" # Gas-liquid separator volume, m^3
+GS_L_ini = "0.4" # Initial liquid fraction in the gas-liquid separators, -
+#
+# CellPotential
+potential = "0" # Enable/Disable the cell potential submodel (0 = OFF, 1 = ON)
+A_elec_eff = "0.005648" # Effective electrode area, m^2
+d_eg = "904e-6" # Electrolyte gap, m
+R_add = "2.8e-3" # Additional ohmic resistance of the system, Ohm
+#
+# ElectrolyteConcentration
+electrolyte_concentration = "0" # Enable/Disable the electrolyte concentration submodel (0 = OFF, 1 = ON)
+WD = "1" # Enable/Disable water dosing in the electrolyte concentration submodel (0 = OFF, 1 = ON)
+VE = "1" # Enable/Disable the vessel level equalization in the electrolyte concentration submodel (0 = OFF, 1 = ON)
+VE_dg = "1" # Enable/Disable influence of the vessel level equalization flows of the electrolyte concentration submodel on the gas impurity submodel (0 = OFF, 1 = ON)
+tau_ve_s = "60" # Setup-specific vessel level equalization control time with separated electrolyte cycles, s
+tau_ve_m = "10" # Setup-specific vessel level equalization control time with mixed electrolyte cycles, s
+#
+# EnergyBalance
+energy_balance = "0" # Enable/Disable the temperature submodel (0 = OFF, 1 = ON)
+EB_hc = "1" # Enable/Disable the automatic heating/cooling in the temperature submodel to maintain the initial temperature (0 = OFF, 1 = ON)
+EB_man_hc_power = "0" # Define an additional heating or cooling power, W
+EB_T_amb = "273.15 + 25" # Ambient temperature, K
+EB_d_cell_stack = "0.2665" # Mean diameter of the cell/stack, m
+EB_insulation_factor_cell_stack = "0" # Additional insulation factor of the cell/stack, (0 = No insulation, 1 = Full insulation)
+EB_A_cell_stack = "0.175" # Outer surface area of the cell/stack, m^2
+EB_m_cell_stack = "30" # Mass of the cell/stack, kg
+EB_d_gs = "0.1775" # Mean diameter of the gas-liquid separators, m
+EB_insulation_factor_gs= "0" # Additional insulation factor of the gas-liquid separators, (0 = No insulation, 1 = Full insulation)
+EB_A_gs = "0.423" # Outher surface area of the gas-liquid separators, m^2
+EB_m_gs = "57" # Mass of one gas-liquid separator, kg
+EB_d_tube = "0.009525" # Diameter of the tubing, m
+EB_insulation_factor_tube= "0" # Additional insulation factor of the tubing (0 = No insulation, 1 = Full insulation)
+EB_A_tube = "0.0300" # Length-related outer surface area of the tubing, m^2/m
+EB_m_tube = "0.200" # Length-related mass of the tubing, kg/m
+EB_L_tube = "10.68" # Length of the tubing that must be considered in the energy balance, m
+#
+# Validation
+gc_validation_name = "" # GC validation name of the experiment
+gc_validation_time_offset = "0" # Time offset of the GC validation experirment
+gc_calib_factor = "0.0037" # Calibration factor, vol.%/GC_AREA
+datalog_validation_name = "" # Datalog validation name of the experiment
+datalog_validation_time_offset = "0" # Time offset of the datalog experiment
+datalog_energy_validation_time_offset = "0" # Time offset of the temperature experiment
+datalog_o2_in_h2_validation_time_offset = "0" # Time offset of the O2 in H2 validation experiment
+datalog_o2_in_h2_calib_factor = "0.5" # Calibration factor, -
+#
+# Optimization
+opt_j_switching_value = "process_config[pp].system_config[ss].j" # Switching limit values of the current density, if enabled in the process configuration, A/m^2
+opt_j_switching_limit = "3000" # Switching limit of the current density, if enabled in the process configuration, A/m^2
+#
+# Electrolyte flow mode
+mixing = "1" # Electrolyte flow mode (0 = separated, 1 = mixed)
+#
+# Dynamic System Simulation Results Export
+system_export_name = "" # Export name of the dynamic system simulation results
+
+# Default run (normal)
+[process.0]
+[process.0.system.0]
+
+# Default run (summarized systems)
+# [process.0]
+# [process.0.systems.0-1]
+# [process.0.system.0]
+# [process.0.system.1]
